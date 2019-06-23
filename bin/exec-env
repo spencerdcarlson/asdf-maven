@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 # set JAVA_HOME via asdf java if JAVA_HOME is not already set
 if [ -z $JAVA_HOME ] ; then
-  if asdf current java > /dev/null 2>&1 ; then
-    asdf_java_version=$(asdf current java | sed -s 's|\(.*\) \?(.*|\1|g')
-    export JAVA_HOME=$(asdf where java "$asdf_java_version")
+  local current
+  if current=$(asdf current java); then
+    local asdf_java_version
+    if [ $(uname -s) == 'Darwin' ]; then
+  		# macOS
+  		asdf_java_version=$(echo $current | cut -d\( -f1)
+	else
+  		asdf_java_version=$(echo $current | sed -s 's|\(.*\) \?(.*|\1|g')
+	fi
+    export JAVA_HOME=$(asdf where java $asdf_java_version)
   fi
 fi
