@@ -1,15 +1,9 @@
 #!/usr/bin/env bash
 # set JAVA_HOME via asdf java if JAVA_HOME is not already set
 if [ -z $JAVA_HOME ]; then
-  local current
   if current=$(asdf current java); then
-    local asdf_java_version
-    if [ $(uname -s) == 'Darwin' ]; then
-      # macOS
-      asdf_java_version=$(echo $current | cut -d\( -f1)
-    else
-      asdf_java_version=$(echo $current | sed -s 's|\(.*\) \?(.*|\1|g')
-    fi
+    # Regex examples - https://regex101.com/r/pVY8uC/1
+    asdf_java_version=$(echo $current | perl -ne 'if ($_ =~ /(^(?:(?!\s*\().)+)/) { print $1; }')
     export JAVA_HOME=$(asdf where java $asdf_java_version)
   fi
 fi
