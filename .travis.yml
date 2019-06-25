@@ -1,14 +1,16 @@
 language: c
 script: 
   - |
-    echo "maven plugin test"
+    echo "Begin asdf-maven plugin test"
     asdf plugin-test maven https://github.com/skotchpine/asdf-maven.git
     echo "Add asdf-java plugin"
     asdf plugin-add java
-    echo "install the latest java version"
+    echo "Install the latest java version"
     asdf install java $(asdf list-all java | tail -n 1)
-    echo "set local asdf java version"
+    echo "Set local asdf java version"
     asdf local java $(asdf list-all java | tail -n 1)
+    echo "Installing asdf-maven plugin"
+    asdf plugin-add maven $TRAVIS_BUILD_DIR
     echo "List all versions of maven"
     asdf list-all maven
     echo "install the latest maven version"
@@ -16,7 +18,7 @@ script:
     echo "set local asdf maven version"
     asdf local maven $(asdf list-all maven | tail -n 1)
     echo "test mvn command"
-    mvn -version
+    mvn -version 2>&1 | grep $(asdf list-all maven | tail -n 1)
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git
   - . asdf/asdf.sh
