@@ -1,5 +1,22 @@
 language: c
-script: asdf plugin-test maven https://github.com/skotchpine/asdf-maven.git
+script: 
+  - |
+    echo "maven plugin test"
+    asdf plugin-test maven https://github.com/skotchpine/asdf-maven.git
+    echo "Add asdf-java plugin"
+    asdf plugin-add java
+    echo "install the latest java version"
+    asdf install java $(asdf list-all java | tail -n 1)
+    echo "set local asdf java version"
+    asdf local java $(asdf list-all java | tail -n 1)
+    echo "List all versions of maven"
+    asdf list-all maven
+    echo "install the latest maven version"
+    asdf install maven $(asdf list-all maven | tail -n 1)
+    echo "set local asdf maven version"
+    asdf local maven $(asdf list-all maven | tail -n 1)
+    echo "test mvn command"
+    mvn -version
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git
   - . asdf/asdf.sh
