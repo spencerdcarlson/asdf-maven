@@ -1,7 +1,7 @@
 language: c
 script: 
   - |
-    echo "Begin asdf-maven plugin test"
+    echo "Begin asdf-maven plugin test ($TRAVIS_OS_NAME)"
     asdf plugin-test maven https://github.com/skotchpine/asdf-maven.git
     echo "Add asdf-java plugin"
     asdf plugin-add java
