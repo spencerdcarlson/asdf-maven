@@ -1,9 +1,36 @@
 #!/usr/bin/env bash
-# set JAVA_HOME via asdf java if JAVA_HOME is not already set
+error () {
+  if [ ! -z "$1" ]; then
+    echo -e "[asdf-maven][error] - $1" >> /dev/stderr
+  fi
+  echo -e "[asdf-maven][error] - please open a new issue at https://github.com/skotchpine/asdf-maven/issues" >> /dev/stderr
+  echo -e "[asdf-maven][error] - please include the following information:" >> /dev/stderr
+  echo -e "[asdf-maven][error] - \tERROR='$1'" >> /dev/stderr
+  echo -e "[asdf-maven][error] - \tOS='$(uname -a)'" >> /dev/stderr
+  echo -e "[asdf-maven][error] - \tJAVA_HOME='$JAVA_HOME'" >> /dev/stderr
+  echo -e "[asdf-maven][error] - \tASDF_VERSION='$(asdf --version)'" >> /dev/stderr
+  echo -e "[asdf-maven][error] - \tASDF_CURRENT_JAVA='$(asdf current java)'" >> /dev/stderr
+  echo -e "[asdf-maven][error] - \tASDF_WHERE_JAVA='$(asdf where java)'" >> /dev/stderr
+  exit 1
+}
+
+info () {
+  echo -e "[asdf-maven][info] - $1"
+}
+
+# set JAVA_HOME via asdf java, only if JAVA_HOME is not already set
 if [ -z $JAVA_HOME ]; then
   if current=$(asdf current java); then
     # Regex examples - https://regex101.com/r/pVY8uC/1
-    asdf_java_version=$(echo $current | perl -ne 'if ($_ =~ /(^(?:(?!\s*\().)+)/) { print $1; }')
-    export JAVA_HOME=$(asdf where java $asdf_java_version)
+    if asdf_java_version=$(echo $current | perl -ne 'if ($_ =~ /(^(?:(?!\s*\().)+)/) { print $1; }'); then
+      export JAVA_HOME=$(asdf where java $asdf_java_version)
+    else
+      error "failed to parse java version from asdf"
+    fi
+  else
+    error "could not derive java version from asdf"
   fi
+else
+  info "using currently set \$JAVA_HOME='$JAVA_HOME'"
+  info "unset JAVA_HOME to use asdf-java plugin's JAVA_HOME"
 fi
