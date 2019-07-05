@@ -11,7 +11,7 @@ script:
     - asdf plugin-add java
     - echo "Install the latest java version"
     # asdf install java is failing on macOS for some reason
-    - asdf install java $(asdf list-all java | tail -n 1)
+    - sudo asdf install java $(asdf list-all java | tail -n 1)
     - echo "Set local asdf java version"
     - asdf local java $(asdf list-all java | tail -n 1)
     - echo "java version set to $(asdf list-all java | tail -n 1)"
