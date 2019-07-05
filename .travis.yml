@@ -2,6 +2,7 @@ language: c
 script: 
     - echo "Begin asdf-maven plugin test ($TRAVIS_OS_NAME)"
     - asdf plugin-test maven https://github.com/skotchpine/asdf-maven.git
+    - unset JAVA_HOME
     - echo "Add asdf-java plugin"
     - asdf plugin-add java
     - echo "Install the latest java version"
@@ -19,8 +20,9 @@ script:
     - asdf local maven $(asdf list-all maven | tail -n 1)
     - echo "set the local maven version $(asdf list-all maven | tail -n 1)"  
     - echo "test mvn command"
-    - unset JAVA_HOME
     - echo -e "echo JAVACMD=\$JAVA_HOME/bin/java\n$(cat ${HOME}/.asdf/installs/maven/3.6.1/bin/mvn)" > ${HOME}/.asdf/installs/maven/3.6.1/bin/mvn
+    - echo "execute java -version"
+    - ${HOME}/.asdf/installs/java/zulu-12.0.1/bin/java -version
     - mvn -version 2>&1
     - mvn -version 2>&1 | grep $(asdf list-all maven | tail -n 1)
 before_script:
