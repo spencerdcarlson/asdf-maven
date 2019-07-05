@@ -8,7 +8,7 @@ script:
     - echo "Install the latest java version"
     - asdf install java $(asdf list-all java | tail -n 1)
     - echo "Set local asdf java version"
-    - asdf local java $(asdf list-all java | tail -n 1)
+    - sudo asdf local java $(asdf list-all java | tail -n 1)
     - echo "java version set to $(asdf list-all java | tail -n 1)"  
     - echo "Installing asdf-maven plugin"
     - asdf plugin-add maven $TRAVIS_BUILD_DIR
