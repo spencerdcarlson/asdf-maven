@@ -8,7 +8,7 @@ script:
     - asdf plugin-test maven ${GIT_URL}
     - unset JAVA_HOME
     - echo "Add asdf-java plugin"
-    - asdf plugin-add java
+    - asdf plugin-add java https://github.com/rud/asdf-java.git
     - echo "Install the latest java version"
     # asdf install java is failing on macOS for some reason
     - asdf install java $(asdf list-all java | tail -n 1)
