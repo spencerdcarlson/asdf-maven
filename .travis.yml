@@ -1,10 +1,10 @@
 language: c
 env:
   global:
-    - ASDF_MAVEN_URL=https://github.com/skotchpine/asdf-maven.git
+    - ASDF_MAVEN_URL=https://github.com/spencerdcarlson/asdf-maven.git
     - ASDF_JAVA_URL=https://github.com/rud/asdf-java.git
     # - ASDF_JAVA_URL=https://github.com/skotchpine/asdf-java.git
-    # - ASDF_MAVEN_URL=https://github.com/spencerdcarlson/asdf-maven.git
+    # - ASDF_MAVEN_URL=https://github.com/skotchpine/asdf-maven.git
 script:
     - echo "begin asdf-maven plugin test"
     - asdf plugin-test maven ${ASDF_MAVEN_URL}
