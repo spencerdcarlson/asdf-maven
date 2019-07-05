@@ -18,6 +18,7 @@ script:
     echo "set local asdf maven version"
     asdf local maven $(asdf list-all maven | tail -n 1)
     echo "test mvn command"
+    mvn -version 2>&1
     mvn -version 2>&1 | grep $(asdf list-all maven | tail -n 1)
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git
