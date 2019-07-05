@@ -28,9 +28,9 @@ script:
     - asdf plugin-list
     - ls ${HOME}/.asdf/installs 
     - ls ${HOME}/.asdf/installs/java
-    - ls ${HOME}/.asdf/installs/java/zulu-12.0.1
-    - ls ${HOME}/.asdf/installs/java/zulu-12.0.1/bin
-    - ${HOME}/.asdf/installs/java/zulu-12.0.1/bin/java -version
+    - ls ${HOME}/.asdf/installs/java/$(asdf list-all java | tail -n 1)
+    - ls ${HOME}/.asdf/installs/java/$(asdf list-all java | tail -n 1)/bin
+    - ${HOME}/.asdf/installs/java/$(asdf list-all java | tail -n 1)/bin/java -version
     - mvn -version 2>&1
     - mvn -version 2>&1 | grep $(asdf list-all maven | tail -n 1)
 before_script:
