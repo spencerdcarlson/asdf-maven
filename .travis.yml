@@ -18,6 +18,8 @@ script:
     - asdf local maven $(asdf list-all maven | tail -n 1)
     - echo "test mvn command"
     - unset JAVA_HOME
+    - echo "WHICH_JAVA='$(which java)'"
+    - echo "JAVACMD='$JAVA_HOME/bin/java'"
     - mvn -version 2>&1
     - mvn -version 2>&1 | grep $(asdf list-all maven | tail -n 1)
 before_script:
