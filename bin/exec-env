@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 error () {
   if [ ! -z "$1" ]; then
-    echo -e "[asdf-maven][error] - $1" >> /dev/stderr
+    echo "[asdf-maven][error] - $1" >> /dev/stderr
   fi
   echo -e "[asdf-maven][error] - please open a new issue at https://github.com/skotchpine/asdf-maven/issues" >> /dev/stderr
   echo -e "[asdf-maven][error] - please include the following information:" >> /dev/stderr
@@ -15,7 +15,7 @@ error () {
 }
 
 info () {
-  echo -e "[asdf-maven][info] - $1"
+  echo "[asdf-maven][info] - $1"
 }
 
 # set JAVA_HOME via asdf java, only if JAVA_HOME is not already set
@@ -24,11 +24,15 @@ if [ -z $JAVA_HOME ]; then
     # Regex examples - https://regex101.com/r/pVY8uC/1
     if asdf_java_version=$(echo $current | perl -ne 'if ($_ =~ /(^(?:(?!\s*\().)+)/) { print $1; }'); then
       export JAVA_HOME=$(asdf where java $asdf_java_version)
+      mvn -version 1>/dev/null 
+      if [ $? -ne 0 ]; then
+        error "\$could not execute 'mvn -version'."
+      fi
     else
-      error "failed to parse java version from asdf"
+      error "failed to parse java version from asdf."
     fi
   else
-    error "could not derive java version from asdf"
+    error "could not derive java version from asdf."
   fi
 else
   info "using currently set \$JAVA_HOME='$JAVA_HOME'"
