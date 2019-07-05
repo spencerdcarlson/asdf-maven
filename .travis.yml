@@ -1,13 +1,12 @@
 language: c
 env:
   global:
-    #- GIT_URL=https://github.com/skotchpine/asdf-maven.git
-    - GIT_URL=https://github.com/spencerdcarlson/asdf-maven.git
+    - GIT_URL=https://github.com/skotchpine/asdf-maven.git
+    # - GIT_URL=https://github.com/spencerdcarlson/asdf-maven.git
 script: 
     - echo "Begin asdf-maven plugin test"
     - asdf plugin-test maven ${GIT_URL}
     - unset JAVA_HOME
-    - asdf plugin-list
     - echo "Add asdf-java plugin"
     - echo "Install the latest java version"
     # asdf install java is failing on macOS for some reason
