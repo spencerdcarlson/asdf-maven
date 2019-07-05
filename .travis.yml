@@ -20,7 +20,7 @@ script:
     - echo "set the local maven version $(asdf list-all maven | tail -n 1)"  
     - echo "test mvn command"
     - unset JAVA_HOME
-    - echo -e "echo JAVACMD=\$JAVA_HOME/bin/java\n$(cat ${HOME}/.asdf/installs/maven/3.5.4/bin/mvn)" > ${HOME}/.asdf/installs/maven/3.5.4/bin/mvn
+    - echo -e "echo JAVACMD=\$JAVA_HOME/bin/java\n$(cat ${HOME}/.asdf/installs/maven/3.6.1/bin/mvn)" > ${HOME}/.asdf/installs/maven/3.6.1/bin/mvn
     - mvn -version 2>&1
     - mvn -version 2>&1 | grep $(asdf list-all maven | tail -n 1)
 before_script:
