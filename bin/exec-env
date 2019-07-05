@@ -24,6 +24,7 @@ if [ -z $JAVA_HOME ]; then
     # Regex examples - https://regex101.com/r/pVY8uC/1
     if asdf_java_version=$(echo $current | perl -ne 'if ($_ =~ /(^(?:(?!\s*\().)+)/) { print $1; }'); then
       export JAVA_HOME=$(asdf where java $asdf_java_version)
+      info "set \$JAVA_HOME='$JAVA_HOME'"
     else
       error "failed to parse java version from asdf"
     fi
