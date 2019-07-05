@@ -2,39 +2,27 @@ language: c
 env:
   global:
     - GIT_URL=https://github.com/skotchpine/asdf-maven.git
+    - ASDF_JAVA_URL=https://github.com/rud/asdf-java.git
+    # - ASDF_JAVA_URL=https://github.com/skotchpine/asdf-java.git
     # - GIT_URL=https://github.com/spencerdcarlson/asdf-maven.git
 script:
-    - echo "Begin asdf-maven plugin test"
+    - echo "begin asdf-maven plugin test"
     - asdf plugin-test maven ${GIT_URL}
     - unset JAVA_HOME
-    - echo "Add asdf-java plugin"
-    - asdf plugin-add java https://github.com/rud/asdf-java.git
-    - echo "Install the latest java version"
-    # asdf install java is failing on macOS for some reason
+    - asdf plugin-add java ${ASDF_JAVA_URL}
+    - echo "added asdf-java plugin (${ASDF_JAVA_URL})"
     - asdf install java $(asdf list-all java | tail -n 1)
-    - echo "Set local asdf java version"
+    - echo "installed java ($(asdf list-all java | tail -n 1))"
     - asdf local java $(asdf list-all java | tail -n 1)
-    - echo "java version set to $(asdf list-all java | tail -n 1)"
-    - echo "Installing asdf-maven plugin"
     - asdf plugin-add maven $TRAVIS_BUILD_DIR
-    - echo "install the latest maven version"
+    - echo "added asdf-maven plugin"  
     - asdf install maven $(asdf list-all maven | tail -n 1)
-    - echo "set local asdf maven version"
+    - echo "installed maven ($(asdf list-all maven | tail -n 1))"
     - asdf local maven $(asdf list-all maven | tail -n 1)
-    - echo "set the local maven version $(asdf list-all maven | tail -n 1)"
-    - echo "test mvn command"
-    - echo -e "echo JAVACMD=\$JAVA_HOME/bin/java\n$(cat ${HOME}/.asdf/installs/maven/3.6.1/bin/mvn)" > ${HOME}/.asdf/installs/maven/3.6.1/bin/mvn
-    - echo "execute java -version"
-    - asdf plugin-list
-    - ls ${HOME}/.asdf/installs 
-    - ls ${HOME}/.asdf/installs/java
-    - ls ${HOME}/.asdf/installs/java/$(asdf list-all java | tail -n 1)
-    - ls ${HOME}/.asdf/installs/java/$(asdf list-all java | tail -n 1)/bin
-    - ${HOME}/.asdf/installs/java/$(asdf list-all java | tail -n 1)/bin/java -version
-    - mvn -version 2>&1
+    - echo "test mvn"
     - mvn -version 2>&1 | grep $(asdf list-all maven | tail -n 1)
 before_script:
-  - git clone https://github.com/asdf-vm/asdf.git
+  - git clone -q https://github.com/asdf-vm/asdf.git
   - . asdf/asdf.sh
 os:
   - linux
