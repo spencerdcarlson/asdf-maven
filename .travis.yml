@@ -9,7 +9,6 @@ script:
     - unset JAVA_HOME
     - asdf plugin-list
     - echo "Add asdf-java plugin"
-    - asdf plugin-add java
     - echo "Install the latest java version"
     # asdf install java is failing on macOS for some reason
     - asdf install java $(asdf list-all java | tail -n 1)
@@ -29,6 +28,10 @@ script:
     - echo -e "echo JAVACMD=\$JAVA_HOME/bin/java\n$(cat ${HOME}/.asdf/installs/maven/3.6.1/bin/mvn)" > ${HOME}/.asdf/installs/maven/3.6.1/bin/mvn
     - echo "execute java -version"
     - asdf plugin-list
+    - ls ${HOME}/.asdf/installs 
+    - ls ${HOME}/.asdf/installs/java
+    - ls ${HOME}/.asdf/installs/java/zulu-12.0.1
+    - ls ${HOME}/.asdf/installs/java/zulu-12.0.1/bin
     - ${HOME}/.asdf/installs/java/zulu-12.0.1/bin/java -version
     - mvn -version 2>&1
     - mvn -version 2>&1 | grep $(asdf list-all maven | tail -n 1)
